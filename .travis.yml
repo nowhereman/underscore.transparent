@@ -1,11 +1,10 @@
 language: node_js
 node_js:
   - "0.10"
-  - "0.8"
 before_script:
   - npm install connect
-  - sudo node test/vendor/server.js ../../../ 80 &
+  - sudo node test/vendor/server.js ../../../ 8000 &
   - sleep 5
-script: phantomjs test/vendor/runner.js "http://localhost:80/test/index.html"
+script: phantomjs test/vendor/runner.js "http://localhost:8000/test/index.html"
 notifications:
   email: false

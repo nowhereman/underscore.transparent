@@ -30,7 +30,7 @@
     "underscore": ">= 1.4.4"
   },
   "devDependencies": {
-    "phantomjs": "1.9.0-1"
+    "phantomjs": ">= 1.9.0"
   },
   "optionalDependencies": {
     "underscore.string": ">= 2.3.1"
