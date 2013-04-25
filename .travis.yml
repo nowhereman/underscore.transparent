@@ -3,8 +3,9 @@ node_js:
   - "0.10"
 before_script:
   - npm install connect
-  - sudo node test/vendor/server.js ../../../ 8000 &
+  - nodepath=`which node`
+  - sudo $nodepath test/vendor/server.js ../../../ &
   - sleep 5
-script: phantomjs test/vendor/runner.js "http://localhost:8000/test/index.html"
+script: phantomjs test/vendor/runner.js "http://localhost/test/index.html"
 notifications:
   email: false
