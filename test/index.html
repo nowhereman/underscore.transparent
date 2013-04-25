@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>Underscore.transparent Test Suite</title>
+  <link rel="stylesheet" href="vendor/qunit.css" type="text/css" media="screen">
+  <!--[if lt IE 8]>
+    <script type="text/javascript" language="javascript" charset="utf-8" src="vendor/json2.js"></script>
+  <![endif]-->
+  <script type="text/javascript" language="javascript" src="vendor/jquery.js"></script>
+  <script type="text/javascript" language="javascript" src="vendor/qunit.js"></script>
+  <script type="text/javascript" language="javascript" src="vendor/jslitmus.js"></script>
+  <script type="text/javascript" language="javascript" src="vendor/underscore.js"></script>
+<!--  <script src="vendor/lodash.underscore.js"></script>-->
+  <script type="text/javascript" language="javascript" src="vendor/underscore.string.js" charset="utf-8"></script>
+  <script type="text/javascript" language="javascript" src="../lib/underscore.transparent.js"></script>
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    
+    //Init Underscore.string
+    _.mixin(_(_.str.exports()).extend({
+      //Alias Underscore.string methods
+      includeString: _.str.include,
+      containsString: _.str.contains,
+      reverseString: _.str.reverse,
+      //Alias Underscore methods
+      encode: _.escape,
+      decode: _.unescape,
+      isNaNumber: _.isNaN
+    }));
+    
+    //Init Underscore.transparent
+    _.transparent();
+  // ]]>
+  </script>
+  <script type="text/javascript" language="javascript" src="collections.js"></script>
+  <script type="text/javascript" language="javascript" src="arrays.js"></script>
+  <script type="text/javascript" language="javascript" src="functions.js"></script>
+  <script type="text/javascript" language="javascript" src="objects.js"></script>
+  <script type="text/javascript" language="javascript" src="utility.js"></script>
+  <script type="text/javascript" language="javascript" src="chaining.js"></script>
+  <script type="text/javascript" language="javascript" src="strings.js" charset="utf-8"></script>
+  <script type="text/javascript" language="javascript" src="speed.js"></script>
+  <script type="text/javascript" language="javascript" src="speedStrings.js" charset="utf-8"></script>
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture">
+    <div id="map-test">
+      <div id="id1"></div>
+      <div id="id2"></div>
+    </div>
+  </div>
+  <br>
+  <h1 class="qunit-header">Underscore.transparent Speed Suite</h1>
+  <p>
+    A representative sample of the functions are benchmarked here, to provide
+    a sense of how fast they might run in different browsers.
+    Each iteration runs on an array of 1000 elements.<br /><br />
+    For example, the 'intersection' test measures the number of times you can
+    find the intersection of two thousand-element arrays in one second.
+  </p>
+  <br>
+  <script type="text/html" id="template">
+    <%
+    // a comment
+    if (data) { data += 12345; }; %>
+    <li><%= data %></li>
+  </script>
+</body>
+</html>
