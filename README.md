@@ -54,8 +54,8 @@ But modifying native objects... isn't it evil?
 [npm]: https://npmjs.org/
 ## Download ##
 
-  * [Development version](https://raw.github.com/nowhereman/underscore.transparent/master/lib/underscore.transparent.js) *Uncompressed with Comments 12kb*
-  * [Production version](https://github.com/nowhereman/underscore.transparent/raw/master/dist/underscore.transparent.min.js) *Minified and Gzipped 1.7kb*
+  * [Development version](https://raw.github.com/nowhereman/underscore.transparent/master/lib/underscore.transparent.js) *Uncompressed with Comments 14kb*
+  * [Production version](https://github.com/nowhereman/underscore.transparent/raw/master/dist/underscore.transparent.min.js) *Minified and Gzipped 1.9kb*
 
 ## Installation and usage ##
 
