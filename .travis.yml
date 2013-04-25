@@ -4,9 +4,8 @@ node_js:
 before_script:
   - npm install connect
   - nodepath=`which node`
-  - phantomjspath=/home/travis/build/nowhereman/underscore.transparent/node_modules/phantomjs/lib/phantom/bin/phantomjs
   - sudo $nodepath test/vendor/server.js ../../../ &
   - sleep 5
-script: $phantomjspath test/vendor/runner.js "http://localhost/test/index.html"
+script: phantomjs test/vendor/runner.js "http://localhost/test/index.html"
 notifications:
   email: false
