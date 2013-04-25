@@ -1,0 +1,12 @@
+{
+  "name": "underscore.transparent",
+  "version": "0.4.2",
+  "main": "./lib/underscore.transparent",
+  "dependencies": {
+    "underscore": ">=1.4.4"
+  },
+  "ignore": [
+    ".travis.yml",
+    "test/"
+  ]
+}

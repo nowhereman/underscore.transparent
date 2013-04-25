@@ -1,0 +1,52 @@
+{
+  "name": "underscore.transparent",
+  "version": "0.4.2",
+  "description": "Push Underscore.js and Underscore.string functions to native JavaScript Objects. Yep! You have Sugar JS code styling but with Underscore",
+  "homepage": "https://github.com/nowhereman/underscore.transparent#readme",
+  "contributors": [
+    "Nowhere man <nowhereman@spam.me> (https://github.com/nowhereman)"
+  ],
+  "keywords": [
+    "underscore",
+    "string",
+    "underscore.string",
+    "prototype",
+    "transparent",
+    "native",
+    "sugar",
+    "javascript",
+    "chaining",
+    "Oriented Object",
+    "syntax",
+    "ActiveSupport",
+    "support",
+    "Enumerable"
+  ],
+  "main": "./lib/underscore.transparent",
+  "directories": {
+    "lib": "./lib"
+  },
+  "dependencies": {
+    "underscore": ">= 1.4.4"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {
+    "underscore.string": ">= 2.3.1"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "phantomjs test/vendor/runner.js test/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nowhereman/underscore.transparent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nowhereman/underscore.transparent/issues"
+  },
+  "licenses" : [
+    { "type" : "MIT" }
+  ]
+}
