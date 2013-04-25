@@ -29,7 +29,9 @@
   "dependencies": {
     "underscore": ">= 1.4.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "phantomjs": "1.9.0-1"
+  },
   "optionalDependencies": {
     "underscore.string": ">= 2.3.1"
   },
@@ -37,7 +39,7 @@
     "node": "*"
   },
   "scripts": {
-    "test": "phantomjs test/vendor/runner.js test/index.html"
+    "test": "phantomjs test/vendor/runner.js 'test/index.html'"
   },
   "repository": {
     "type": "git",
