@@ -20,7 +20,7 @@ suite('Node.js integration', function() {
     }));
 
     var options = {extendAll: true};//In Node.js we can safely extends all Underscore and Underscore.string functions to built-in JavaScript objects
-    require('underscore.transparent');
+    require('../lib/underscore.transparent');
     _.transparent(options);
   });
   
