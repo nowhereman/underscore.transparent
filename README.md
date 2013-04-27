@@ -112,7 +112,7 @@ Or add `underscore.transparent` to your apps `component.json` or `bower.json`.
 
 **Integrate with Underscore.js**:
 ```javascript
-root._ = require('underscore');
+global._ = require('underscore');
 //Alias Underscore conflict functions
 _.mixin({
   encode: _.escape,
