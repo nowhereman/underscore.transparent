@@ -237,6 +237,12 @@ Any suggestions or bug reports are welcome. Just open an issue.
 
 ## Changelog ##
 
+### 0.4.3 ###
+
+* Fix Node.js usage
+* Fix Travis CI config
+* Better instructions in README.md
+
 ### 0.4.2 ###
 
 * First public release !

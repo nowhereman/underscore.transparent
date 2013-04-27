@@ -1,6 +1,6 @@
 {
   "name": "underscore.transparent",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Push Underscore.js and Underscore.string functions to native JavaScript Objects. Yep! You have Sugar JS code styling but with Underscore",
   "homepage": "https://github.com/nowhereman/underscore.transparent#readme",
   "contributors": [
