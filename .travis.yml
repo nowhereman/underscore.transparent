@@ -3,6 +3,7 @@ node_js:
   - "0.10"
 before_script:
   - npm install connect
+  - chmod +x ./script/ci/run_test.sh
   - nodepath=`which node`
   - sudo $nodepath test/vendor/server.js ../../../ &
   - sleep 5
