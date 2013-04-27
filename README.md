@@ -97,7 +97,7 @@ But modifying native objects... isn't it evil?
 
     bower install underscore.transparent
 
-Or add `underscore.transparent` to your apps `component.json`.
+Or add `underscore.transparent` to your apps `component.json` or `bower.json`.
 ``` json
   "dependencies": {
     "underscore.transparent": "latest"
