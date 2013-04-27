@@ -62,14 +62,14 @@ But modifying native objects... isn't it evil?
 ### In browsers ###
 
 ```html
-<script type="text/javascript" language="javascript" charset="utf-8" src="http://underscorejs.org/underscore-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://underscorejs.org/underscore-min.js"></script>
 
 <!-- Optional Underscore.string integration -->
-  <script type="text/javascript" language="javascript" charset="utf-8" src="https://raw.github.com/epeli/underscore.string/master/dist/underscore.string.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="https://raw.github.com/epeli/underscore.string/master/dist/underscore.string.min.js"></script>
 
-<script type="text/javascript" language="javascript" charset="utf-8" src="https://raw.github.com/nowhereman/underscore.transparent/master/dist/underscore.transparent.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://raw.github.com/nowhereman/underscore.transparent/master/dist/underscore.transparent.min.js"></script>
 
-<script type="text/javascript" language="javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
 // <![CDATA[
   //Alias Underscore conflict functions
   _.mixin({
