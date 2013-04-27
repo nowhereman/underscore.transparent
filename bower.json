@@ -6,8 +6,10 @@
     "underscore": ">=1.4.4"
   },
   "ignore": [
+    ".gitignore",
     ".travis.yml",
     "test/",
+    "script/",
     "package.json"
   ]
 }

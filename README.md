@@ -112,7 +112,7 @@ Or add `underscore.transparent` to your apps `component.json` or `bower.json`.
 
 **Integrate with Underscore.js**:
 ```javascript
-global._ = require('underscore');
+var _ = require('underscore');
 //Alias Underscore conflict functions
 _.mixin({
   encode: _.escape,
@@ -123,20 +123,20 @@ _.mixin({
 
 ***Optional Underscore.string integration***:
 ```javascript
-  // Import Underscore.string to separate object, because there are conflict functions (include, reverse, contains)
-  _.str = require('underscore.string');
-  // Mix in non-conflict functions and aliasing conflict functions to Underscore namespace, more info at https://github.com/epeli/underscore.string#readme
-  _.mixin(_(_.str.exports()).extend({
-    includeString: _.str.include,
-    containsString: _.str.contains,
-    reverseString: _.str.reverse
-  }));
+// Import Underscore.string to separate object, because there are conflict functions (include, reverse, contains)
+_.str = require('underscore.string');
+// Mix in non-conflict functions and aliasing conflict functions to Underscore namespace, more info at https://github.com/epeli/underscore.string#readme
+_.mixin(_(_.str.exports()).extend({
+includeString: _.str.include,
+containsString: _.str.contains,
+reverseString: _.str.reverse
+}));
 ```
 
 **Last but not least, init Underscore.transparent**:
 ```javascript
 require('underscore.transparent');
-_.transparent();
+_.transparent({extendAll: true});//In Node.js we can safely extends all Underscore and Underscore.string functions to built-in JavaScript objects
 ```
 
 OMG `_` is now transparent !

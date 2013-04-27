@@ -6,6 +6,6 @@ before_script:
   - nodepath=`which node`
   - sudo $nodepath test/vendor/server.js ../../../ &
   - sleep 5
-script: phantomjs test/vendor/runner.js "http://localhost/test/index.html"
+script: ./script/ci/run_test.sh
 notifications:
   email: false
