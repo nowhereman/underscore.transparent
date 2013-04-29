@@ -136,7 +136,8 @@ reverseString: _.str.reverse
 **Last but not least, init Underscore.transparent**:
 ```javascript
 require('underscore.transparent');
-_.transparent({extendAll: true});//In Node.js we can safely extends all Underscore and Underscore.string functions to built-in JavaScript objects
+//In Node.js we can safely extends all Underscore and Underscore.string functions to built-in JavaScript objects
+_.transparent({extendAll: true, scope: global});
 ```
 
 OMG `_` is now transparent !
@@ -237,6 +238,9 @@ Any suggestions or bug reports are welcome. Just open an issue.
 
 ## Changelog ##
 
+### 0.5.0 ###
+
+* `is[Type]` global functions are available for both Node.js and Web browsers
 ### 0.4.3 ###
 
 * Fix Node.js usage
