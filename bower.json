@@ -1,6 +1,6 @@
 {
   "name": "underscore.transparent",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "main": "./lib/underscore.transparent.js",
   "dependencies": {
     "underscore": ">=1.4.4"
