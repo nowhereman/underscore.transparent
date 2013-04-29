@@ -241,6 +241,8 @@ Any suggestions or bug reports are welcome. Just open an issue.
 ### 0.5.0 ###
 
 * `is[Type]` global functions are available for both Node.js and Web browsers
+* Add tests for `_.transparent` options
+
 ### 0.4.3 ###
 
 * Fix Node.js usage
