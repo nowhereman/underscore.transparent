@@ -1,9 +1,9 @@
-//Usage: mocha --ui tdd test/nodeIntegration.js
+//Usage: mocha test/nodeIntegration.js
 "use strict";
-var assert = require("assert");
+var expect = require("expect.js");
 var _;
-suite('Node.js integration', function() {
-  setup(function() {
+describe('Node.js integration', function() {
+  before(function() {
     _ = require('underscore');
     //Alias Underscore conflict functions
     _.mixin({
@@ -23,89 +23,89 @@ suite('Node.js integration', function() {
 
     require('../lib/underscore.transparent');
   });
-  suite('Native Object', function() {
-    setup(function() {
+  describe('Native Object', function() {
+    before(function() {
       var options = {scope: global};
       _.transparent(options);
     });
     
-    suite('toHash', function() {
-      test('should be available as global function', function() {
-        assert.deepEqual(toHash({foo:"bar"}), {foo:"bar"});
-        assert.deepEqual(global.toHash({foo:"bar"}), {foo:"bar"});
-        assert.deepEqual(Object.toHash({foo:"bar"}), {foo:"bar"});
+    describe('toHash', function() {
+      it('should be available as global function', function() {
+        expect(toHash({foo:"bar"})).eql({foo:"bar"});
+        expect(global.toHash({foo:"bar"})).eql({foo:"bar"});
+        expect(Object.toHash({foo:"bar"})).eql({foo:"bar"});
       });
     });
     
-    test("shouldn't have Underscore available as Object.prototype functions", function() {
-      assert.ok(isUndefined({one : 1, two : 2, three : 3}.keys));
-      assert.ok(isUndefined({one : 1, two : 2, three : 3}.values));
-      assert.ok(isUndefined({one : 1, two : 2, three : 3}.contains));
+    it("shouldn't have Underscore available as Object.prototype functions", function() {
+      expect(isUndefined({one : 1, two : 2, three : 3}.keys)).ok();
+      expect(isUndefined({one : 1, two : 2, three : 3}.values)).ok();
+      expect(isUndefined({one : 1, two : 2, three : 3}.contains)).ok();
     });
     
-    suite('convert to Hash', function() {
-      test('should have Underscore available as Object.prototype functions', function() {
-        assert.ok(isFunction(toHash({one : 1, two : 2, three : 3}).keys));
-        assert.deepEqual(toHash({one : 1, two : 2, three : 3}).keys(), ["one", "two", "three"]);
-        assert.deepEqual(toHash({one : 1, two : 2, three : 3}).values(), [1, 2, 3]);
-        assert.ok(toHash({one : 1, two : 2, three : 3}).contains(3));
+    describe('convert to Hash', function() {
+      it('should have Underscore available as Object.prototype functions', function() {
+        expect(isFunction(toHash({one : 1, two : 2, three : 3}).keys)).ok();
+        expect(toHash({one : 1, two : 2, three : 3}).keys()).eql(["one", "two", "three"]);
+        expect(toHash({one : 1, two : 2, three : 3}).values()).eql([1, 2, 3]);
+        expect(toHash({one : 1, two : 2, three : 3}).contains(3)).ok();
       });
     });
   });
   
-  suite('Object extended', function() {
-    setup(function() {
+  describe('Object extended', function() {
+    before(function() {
       //In Node.js we can safely extends all Underscore and Underscore.string functions to built-in JavaScript objects
       var options = {extendAll: true, scope: global};
       _.transparent(options);
     });
     
-    suite('Array.prototype', function() {
-      test('should inherit Underscore functions', function() {
+    describe('Array.prototype', function() {
+      it('should inherit Underscore functions', function() {
         var result = [];
         ['zero', 'one', 'two'].each(function(element, index) { result.push(index+':'+element); });
-        assert.equal(result.join(';'), "0:zero;1:one;2:two");
+        expect(result.join(';')).equal("0:zero;1:one;2:two");
       });
-      test('should chain Underscore functions', function() {
-        assert.deepEqual([2, 1, 3, [5, 8, 3, 9], null, false].flatten().compact().uniq().shuffle().sort(), [1, 2, 3, 5, 8, 9]);
-      });
-    });
-    
-    suite('String.prototype', function() {
-      test('should inherit Underscore.string functions', function() {
-        assert.equal("   epeli  ".trim().capitalize(), "Epeli");
+      it('should chain Underscore functions', function() {
+        expect([2, 1, 3, [5, 8, 3, 9], null, false].flatten().compact().uniq().shuffle().sort()).eql([1, 2, 3, 5, 8, 9]);
       });
     });
     
-    suite('is[Type]', function() {
-      test('should be available as global functions', function() {
-        assert.ok(isString("my string"));
-        assert.ok(global.isString("my string"));
-        assert.ok(root.isString("my string"));
-        assert.ok(Object.isString("my string"));
-        assert.equal(Object.isObject("my string"), false);
-        assert.ok(Object.isObject({}));
-      });
-      test('should be available as prototype functions', function() {
-        assert.ok("my string".isString());
-        assert.ok({foo:"bar"}.isObject());
+    describe('String.prototype', function() {
+      it('should inherit Underscore.string functions', function() {
+        expect("   epeli  ".trim().capitalize()).equal("Epeli");
       });
     });
     
-    suite('toHash', function() {
-      test('should be available as global function', function() {
-        assert.deepEqual(toHash({foo:"bar"}), {foo:"bar"});
-        assert.deepEqual(global.toHash({foo:"bar"}), {foo:"bar"});
-        assert.deepEqual(Object.toHash({foo:"bar"}), {foo:"bar"});
+    describe('is[Type]', function() {
+      it('should be available as global functions', function() {
+        expect(isString("my string")).ok();
+        expect(global.isString("my string")).ok();
+        expect(root.isString("my string")).ok();
+        expect(Object.isString("my string")).ok();
+        expect(Object.isObject("my string")).equal(false);
+        expect(Object.isObject({})).ok();
+      });
+      it('should be available as prototype functions', function() {
+        expect("my string".isString()).ok();
+        expect({foo:"bar"}.isObject()).ok();
       });
     });
     
-    suite('with Underscore functions', function() {
-      test('should have Object.prototype functions', function() {
-        assert.ok(isFunction({one : 1, two : 2, three : 3}.keys));
-        assert.deepEqual({one : 1, two : 2, three : 3}.keys(), ["one", "two", "three"]);
-        assert.deepEqual({one : 1, two : 2, three : 3}.values(), [1, 2, 3]);
-        assert.ok({one : 1, two : 2, three : 3}.contains(3));
+    describe('toHash', function() {
+      it('should be available as global function', function() {
+        expect(toHash({foo:"bar"})).eql({foo:"bar"});
+        expect(global.toHash({foo:"bar"})).eql({foo:"bar"});
+        expect(Object.toHash({foo:"bar"})).eql({foo:"bar"});
+      });
+    });
+    
+    describe('with Underscore functions', function() {
+      it('should have Object.prototype functions', function() {
+        expect(isFunction({one : 1, two : 2, three : 3}.keys)).ok();
+        expect({one : 1, two : 2, three : 3}.keys()).eql(["one", "two", "three"]);
+        expect({one : 1, two : 2, three : 3}.values()).eql([1, 2, 3]);
+        expect({one : 1, two : 2, three : 3}.contains(3)).ok();
       });
     });
   });
