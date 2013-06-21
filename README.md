@@ -77,7 +77,7 @@ But modifying native objects... isn't it evil?
     decode: _.unescape,
     isNaNumber: _.isNaN
   });
-  
+
   //Optional Underscore.string initialization
     _.mixin(_(_.str.exports()).extend({
       //Alias Underscore.string functions
@@ -86,7 +86,7 @@ But modifying native objects... isn't it evil?
       reverseString: _.str.reverse
     }));
   // End of Optional
-  
+
   //Init Underscore.transparent
   _.transparent();
 // ]]>
@@ -201,7 +201,7 @@ Due to JavaScript limitations, we lose some things:
 * Calls like `var s1 = "foobar"; s1.isString()` aren't available to prevent unexpected bugs when the `s1` variable is `null`, `undefined` or with `isObject` function.
   Instead, you should do `Object.isString("foobar")` or `window.isString("foobar")` (or `isString("foobar")`)
 * Native chaining don't work correctly for JavaScript functions who don't return the current object (E.g. `Array.prototype.[push|pop|shift|unshift]`). <del>`[2,1,3].shuffle().pop().sort(); => []`</del> trigger `"TypeError: (intermediate value).shuffle(...).pop(...).sort is not a function"`.
- 
+
   In this case, you need to use `chain` and `value` functions: `[2,1,3].chain().shuffle().pop().sort().value(); => [1,2]`
 
 
@@ -237,6 +237,9 @@ Any suggestions or bug reports are welcome. Just open an issue.
 
 
 ## Changelog ##
+
+### 0.5.2 ###
+* Fix IE8 and below when using function with implicit scope like `isString("dd");`.
 
 ### 0.5.1 ###
 * Add newline at end of file `underscore.transparent.js`
