@@ -83,7 +83,7 @@ But modifying native objects... isn't it evil?
       //Alias Underscore.string functions
       includeString: _.str.include,
       containsString: _.str.contains,
-      reverseString: _.str.reverse,
+      reverseString: _.str.reverse
     }));
   // End of Optional
   
