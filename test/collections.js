@@ -41,27 +41,27 @@ $(document).ready(function() {
     var tripled = [1, 2, 3].map(function(num){ return num * this.multiplier; }, {multiplier : 3});
     equal(tripled.join(', '), '3, 6, 9', 'tripled numbers with context');
 
-    var doubled = [1, 2, 3].map(function(num){ return num * 2; });
+    doubled = [1, 2, 3].map(function(num){ return num * 2; });
     equal(doubled.join(', '), '2, 4, 6', 'OO-style doubled numbers');
 
     if (document.querySelectorAll) {
       var ids = Object.toArray(document.querySelectorAll('#map-test *')).map(function(n){ return n.id; });
       deepEqual(ids, ['id1', 'id2'], 'Can use collection methods on NodeLists.');
     }
-    
+
     // NOTICE: It's use the jQuery.prototype.map function (http://api.jquery.com/map) with Underscore.transparent
     // Doc: jQuery(array).map( callback(index, domElement) )
     var idsFromjQuery = $('#map-test').children().map(function(index, domElement){ return domElement.id; });
     deepEqual(jQuery.makeArray(idsFromjQuery), ['id1', 'id2'], 'Can use jQuery collection methods on jQuery Array-likes.');
-    
+
     idsFromjQuery = jQuery.makeArray($('#map-test').children()).map(function(n){ return n.id; });
     deepEqual(idsFromjQuery, ['id1', 'id2'], 'Can use collection methods on jQuery Array-likes.');
-    
+
     // NOTICE: To used Underscore `map` function with Underscore.transparent, you need to convert your jQuery Object with Object.toArray() function:
     var ids = Object.toArray($('#map-test').children()).map(function(n){ return n.id; });
     deepEqual(ids, ['id1', 'id2'], 'Can use collection methods on jQuery Array-likes.');
 
-    var ids = Object.toArray(document.images).map(function(n){ return n.id; });
+    ids = Object.toArray(document.images).map(function(n){ return n.id; });
     ok(ids[0] == 'chart_image', 'can use collection methods on HTMLCollections');
 
     var ifnull = Object.map(null, function(){});
@@ -82,7 +82,7 @@ $(document).ready(function() {
     sum = [1, 2, 3].reduce(function(sum, num){ return sum + num; }, 0);
     equal(sum, 6, 'OO-style reduce');
 
-    var sum = [1, 2, 3].reduce(function(sum, num){ return sum + num; });
+    sum = [1, 2, 3].reduce(function(sum, num){ return sum + num; });
     equal(sum, 6, 'default initial value');
 
     var ifnull;
@@ -102,10 +102,10 @@ $(document).ready(function() {
     var list = ["foo", "bar", "baz"].reduceRight(function(memo, str){ return memo + str; }, '');
     equal(list, 'bazbarfoo', 'can perform right folds');
 
-    var list = ["foo", "bar", "baz"].foldr(function(memo, str){ return memo + str; }, '');
+    list = ["foo", "bar", "baz"].foldr(function(memo, str){ return memo + str; }, '');
     equal(list, 'bazbarfoo', 'aliased as "foldr"');
 
-    var list = ["foo", "bar", "baz"].foldr(function(memo, str){ return memo + str; });
+    list = ["foo", "bar", "baz"].foldr(function(memo, str){ return memo + str; });
     equal(list, 'bazbarfoo', 'default initial value');
 
     var ifnull;
@@ -315,7 +315,7 @@ $(document).ready(function() {
     var list = [undefined, 4, 1, undefined, 3, 2];
     equal(list.sortBy(_.identity).join(','), '1,2,3,4,,', 'sortBy with undefined values');
 
-    var list = ["one", "two", "three", "four", "five"];
+    list = ["one", "two", "three", "four", "five"];
     var sorted = list.sortBy('length');
     equal(sorted.join(' '), 'one two four five three', 'sorted by length');
 
@@ -366,10 +366,28 @@ $(document).ready(function() {
     var array = [{}];
     array.groupBy(function(value, index, obj){ ok(obj === array); });
 
-    var array = [1, 2, 1, 2, 3];
+    array = [1, 2, 1, 2, 3];
     var grouped = array.groupBy();
     equal(grouped['1'].length, 2);
     equal(grouped['3'].length, 1);
+  });
+
+  test('indexBy', function() {
+    var parity = [1, 2, 3, 4, 5].indexBy(function(num){ return num % 2 == 0; });
+    equal(parity['true'], 4);
+    equal(parity['false'], 5);
+
+    var list = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+    var grouped = list.indexBy('length');
+    equal(grouped['3'], 'ten');
+    equal(grouped['4'], 'nine');
+    equal(grouped['5'], 'eight');
+
+    var array = [1, 2, 1, 2, 3];
+    var grouped = array.indexBy();
+    equal(grouped['1'], 1);
+    equal(grouped['2'], 2);
+    equal(grouped['3'], 3);
   });
 
   test('countBy', function() {
@@ -395,8 +413,8 @@ $(document).ready(function() {
     var array = [{}];
     array.countBy(function(value, index, obj){ ok(obj === array); });
 
-    var array = [1, 2, 1, 2, 3];
-    var grouped = array.countBy();
+    array = [1, 2, 1, 2, 3];
+    grouped = array.countBy();
     equal(grouped['1'], 2);
     equal(grouped['3'], 1);
   });
@@ -424,6 +442,19 @@ $(document).ready(function() {
     var shuffled = numbers.shuffle().sort();
     notStrictEqual(numbers, shuffled, 'original object is unmodified');
     equal(shuffled.join(','), numbers.join(','), 'contains the same members before and after shuffle');
+  });
+
+  test('sample', function() {
+    var numbers = Object.range(10);
+    var all_sampled = numbers.sample(10).sort();
+    equal(all_sampled.join(','), numbers.join(','), 'contains the same members before and after sample');
+    all_sampled = numbers.sample(20).sort();
+    equal(all_sampled.join(','), numbers.join(','), 'also works when sampling more objects than are present');
+    ok(numbers.contains(numbers.sample()), 'sampling a single element returns something from the array');
+    strictEqual([].sample(), undefined, 'sampling empty array with no number returns undefined');
+    notStrictEqual([].sample(5), [], 'sampling empty array with a number returns an empty array');
+    notStrictEqual([1, 2, 3].sample(0), [], 'sampling an array with 0 picks returns an empty array');
+    deepEqual([1, 2].sample(-1), [], 'sampling a negative number of picks returns an empty array');
   });
 
   test('toArray', function() {

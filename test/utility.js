@@ -207,7 +207,7 @@ $(document).ready(function() {
     strictEqual(obj.result('x'), 'x');
     strictEqual(obj.result('y'), 'x');
     strictEqual(obj.result('z'), undefined);
-    strictEqual(Object.result(null, 'x'), null);
+    strictEqual(Object.result(null, 'x'), undefined);
   });
 
   test('_.templateSettings.variable', function() {

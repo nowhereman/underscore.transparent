@@ -29,8 +29,8 @@ $(document).ready(function() {
     equal(Object.toHash(obj.invert()).keys().join(' '), 'Moe Larry Curly', 'can invert an object');
     ok(Object.isEqual(Object.toHash(obj.invert()).invert(), obj), 'two inverts gets you back where you started');
 
-    var obj = Object.toHash({length: 3});
-    ok(obj.invert()['3'] == 'length', 'can invert an object with "length"')
+    obj = Object.toHash({length: 3});
+    ok(obj.invert()['3'] == 'length', 'can invert an object with "length"');
   });
 
   test("functions", function() {
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
     var Animal = function(){};
     Animal.prototype.run = function(){};
-    equal(Object.functions(new Animal).join(''), 'run', 'also looks up functions on the prototype');
+    equal(Object.functions(new Animal()).join(''), 'run', 'also looks up functions on the prototype');
   });
 
   test("extend", function() {
@@ -92,12 +92,13 @@ $(document).ready(function() {
 
   test("defaults", function() {
     var result;
-    var options = Object.toHash({zero: 0, one: 1, empty: "", nan: NaN, string: "string"});
+    var options = Object.toHash({zero: 0, one: 1, empty: "", nan: NaN, nothing: null});
 
     options.defaults({zero: 1, one: 10, twenty: 20});
     equal(options.zero, 0, 'value exists');
     equal(options.one, 1, 'value exists');
     equal(options.twenty, 20, 'default applied');
+    equal(options.nothing, null, "null isn't overridden");
 
     options.defaults({empty: "full"}, {nan: "nan"}, {word: "word"}, {word: "dog"});
     equal(options.empty, "", 'value exists');
@@ -176,10 +177,10 @@ $(document).ready(function() {
 
     // Boolean object and primitive comparisons.
     ok(Object.isEqual(true, true), "Identical boolean primitives are equal");
-    ok(Object.isEqual(new Boolean, new Boolean), "Boolean objects with identical primitive values are equal");
+    ok(Object.isEqual(new Boolean(), new Boolean()), "Boolean objects with identical primitive values are equal");
     ok(Object.isEqual(true, new Boolean(true)), "Boolean primitives and their corresponding object wrappers are equal");
     ok(Object.isEqual(new Boolean(true), true), "Commutative equality is implemented for booleans");
-    ok(!Object.isEqual(new Boolean(true), new Boolean), "Boolean objects with different primitive values are not equal");
+    ok(!Object.isEqual(new Boolean(true), new Boolean()), "Boolean objects with different primitive values are not equal");
 
     // Common type coercions.
     ok(!Object.isEqual(true, new Boolean(false)), "Boolean objects are not equal to the boolean primitive `true`");
@@ -288,10 +289,10 @@ $(document).ready(function() {
     ok(Object.isEqual(a, b), "Objects with nested equivalent members are recursively compared");
 
     // Instances.
-    ok(Object.isEqual(new First, new First), "Object instances are equal");
-    ok(!Object.isEqual(new First, new Second), "Objects with different constructors and identical own properties are not equal");
-    ok(!Object.isEqual({value: 1}, new First), "Object instances and objects sharing equivalent properties are not equal");
-    ok(!Object.isEqual({value: 2}, new Second), "The prototype chain of objects should not be examined");
+    ok(Object.isEqual(new First(), new First()), "Object instances are equal");
+    ok(!Object.isEqual(new First(), new Second()), "Objects with different constructors and identical own properties are not equal");
+    ok(!Object.isEqual({value: 1}, new First()), "Object instances and objects sharing equivalent properties are not equal");
+    ok(!Object.isEqual({value: 2}, new Second()), "The prototype chain of objects should not be examined");
 
     // Circular Arrays.
     (a = []).push(a);
@@ -469,10 +470,12 @@ $(document).ready(function() {
   });
 
   test("isFunction", function() {
+    ok(!Object.isFunction(undefined), 'undefined vars are not functions');
     ok(!Object.isFunction([1, 2, 3]), 'arrays are not functions');
     ok(!Object.isFunction('moe'), 'strings are not functions');
     ok(Object.isFunction(Object.isFunction), 'but functions are');
     ok(Object.isFunction(iFunction), 'even from another frame');
+    ok(Object.isFunction(function(){}), 'even anonymous ones');
   });
 
   test("isDate", function() {

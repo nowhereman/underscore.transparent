@@ -63,9 +63,12 @@ $(document).ready(function() {
       getName : function() { return 'name: ' + this.name; },
       sayHi   : function() { return 'hi: ' + this.name; }
     });
-    moe.bindAll();
+
+    raises(function() { moe.bindAll(); }, Error, 'throws an error for bindAll with no functions named');
+
+    moe.bindAll('sayHi');
     curly.sayHi = moe.sayHi;
-    equal(curly.sayHi(), 'hi: moe', 'calling bindAll with no arguments binds all functions to the object');
+    equal(curly.sayHi(), 'hi: moe');
   });
 
   test("memoize", function() {
@@ -136,17 +139,31 @@ $(document).ready(function() {
     (function(){ equal(counter, 2, "incr was called twice"); start(); }).delay(64);
   });
 
+  asyncTest("more throttling", 3, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var throttledIncr = incr.throttle(30);
+    throttledIncr(); throttledIncr();
+    ok(counter == 1);
+    (function() {
+      ok(counter == 2);
+      throttledIncr();
+      ok(counter == 3);
+      start();
+    }).delay(85);
+  });
+
   asyncTest("throttle repeatedly with results", 6, function() {
     var counter = 0;
     var incr = function(){ return ++counter; };
-    var throttledIncr = incr.throttle(64);
+    var throttledIncr = incr.throttle(100);
     var results = [];
     var saveResult = function() { results.push(throttledIncr()); };
     saveResult(); saveResult();
-    saveResult.delay(32);
-    saveResult.delay(80);
-    saveResult.delay(96);
-    saveResult.delay(144);
+    saveResult.delay(50);
+    saveResult.delay(150);
+    saveResult.delay(160);
+    saveResult.delay(230);
     (function() {
       equal(results[0], 1, "incr was called once");
       equal(results[1], 1, "incr was throttled");
@@ -155,7 +172,7 @@ $(document).ready(function() {
       equal(results[4], 2, "incr was throttled");
       equal(results[5], 3, "incr was called trailing");
       start();
-    }).delay(192);
+    }).delay(300);
   });
 
   asyncTest("throttle triggers trailing call when invoked repeatedly", 2, function() {
@@ -164,8 +181,8 @@ $(document).ready(function() {
     var incr = function(){ counter++; };
     var throttledIncr = incr.throttle(32);
 
-    var stamp = new Date;
-    while ((new Date - stamp) < limit) {
+    var stamp = new Date();
+    while ((new Date() - stamp) < limit) {
       throttledIncr();
     }
     var lastCount = counter;
@@ -174,6 +191,77 @@ $(document).ready(function() {
     (function() {
       ok(counter > lastCount);
       start();
+    }).delay(96);
+  });
+
+ asyncTest("throttle does not trigger leading call when leading is set to false", 2, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var throttledIncr = incr.throttle(60, {leading: false});
+
+    throttledIncr(); throttledIncr();
+    ok(counter === 0);
+
+    (function() {
+      ok(counter == 1);
+      start();
+    }).delay(96);
+  });
+
+  asyncTest("more throttle does not trigger leading call when leading is set to false", 3, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var throttledIncr = incr.throttle(100, {leading: false});
+
+    throttledIncr();
+    throttledIncr.delay(50);
+    throttledIncr.delay(60);
+    throttledIncr.delay(200);
+    ok(counter === 0);
+
+    (function() {
+      ok(counter == 1);
+    }).delay(250);
+
+    (function() {
+      ok(counter == 2);
+      start();
+    }).delay(350);
+  });
+
+  asyncTest("one more throttle with leading: false test", 2, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var throttledIncr = incr.throttle(100, {leading: false});
+
+    var time = new Date();
+    while (new Date() - time < 350) throttledIncr();
+    ok(counter <= 3);
+
+    (function() {
+      ok(counter <= 4);
+      start();
+    }).delay(200);
+  });
+
+  asyncTest("throttle does not trigger trailing call when trailing is set to false", 4, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var throttledIncr = incr.throttle(60, {trailing: false});
+
+    throttledIncr(); throttledIncr(); throttledIncr();
+    ok(counter === 1);
+
+    (function() {
+      ok(counter == 1);
+
+      throttledIncr(); throttledIncr();
+      ok(counter == 2);
+
+      (function() {
+        ok(counter == 2);
+        start();
+      }).delay(96);
     }).delay(96);
   });
 
@@ -259,7 +347,8 @@ $(document).ready(function() {
 
     equal(testAfter(5, 5), 1, "after(N) should fire after being called N times");
     equal(testAfter(5, 4), 0, "after(N) should not fire unless called N times");
-    equal(testAfter(0, 0), 1, "after(0) should fire immediately");
+    equal(testAfter(0, 0), 0, "after(0) should not fire immediately");
+    equal(testAfter(0, 1), 1, "after(0) should fire when first invoked");
   });
 
 });

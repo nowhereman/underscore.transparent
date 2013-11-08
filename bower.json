@@ -3,7 +3,7 @@
   "version": "0.5.2",
   "main": "./lib/underscore.transparent.js",
   "dependencies": {
-    "underscore": ">=1.4.4"
+    "underscore": ">=1.5.2"
   },
   "ignore": [
     ".gitignore",
