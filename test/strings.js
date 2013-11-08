@@ -242,6 +242,8 @@ $(document).ready(function() {
     equal(Object.titleize(null), '', 'Titleize null returns empty string');
     equal(Object.titleize(undefined), '', 'Titleize undefined returns empty string');
     equal('let\'s have some fun'.titleize(), 'Let\'s Have Some Fun');
+    equal('a-dash-separated-string'.titleize(), 'A-Dash-Separated-String');
+    equal('A-DASH-SEPARATED-STRING'.titleize(), 'A-Dash-Separated-String');
     equal((123).titleize(), '123');
   });
 
@@ -293,6 +295,7 @@ $(document).ready(function() {
     equal(''.camelize(), '');
     equal(Object.camelize(null), '');
     equal(Object.camelize(undefined), '');
+    equal("_som eWeird---name-".camelize(), 'SomEWeirdName');
   });
 
   test('String: join', function(){
@@ -423,7 +426,7 @@ $(document).ready(function() {
   });
 
   test('String: swapCase', function(){
-	  equal('AaBbCcDdEe'.swapCase(), 'aAbBcCdDeE');
+    equal('AaBbCcDdEe'.swapCase(), 'aAbBcCdDeE');
     equal('Hello World'.swapCase(), 'hELLO wORLD');
     equal(''.swapCase(), '');
     equal(Object.swapCase(null), '');
@@ -604,7 +607,7 @@ $(document).ready(function() {
   test('Strings: slugify', function() {
     equal('Jack & Jill like numbers 1,2,3 and 4 and silly characters ?%.$!/'.slugify(), 'jack-jill-like-numbers-123-and-4-and-silly-characters');
     equal('Un éléphant à l\'orée du bois'.slugify(), 'un-elephant-a-loree-du-bois');
-    equal('I know latin characters: á í ó ú ç ã õ ñ ü'.slugify(), 'i-know-latin-characters-a-i-o-u-c-a-o-n-u');
+    equal('I know latin characters: á í ó ú ç ã õ ñ ü ă ș ț'.slugify(), 'i-know-latin-characters-a-i-o-u-c-a-o-n-u-a-s-t');
     equal('I am a word too, even though I am but a single letter: i!'.slugify(), 'i-am-a-word-too-even-though-i-am-but-a-single-letter-i');
     equal(''.slugify(), '');
     equal(Object.slugify(null), '');
@@ -613,16 +616,25 @@ $(document).ready(function() {
 
   test('Strings: quote', function(){
     equal('foo'.quote(), '"foo"');
-    //equal('"foo"'.quote(), '""foo""'); // NOTICE: Underscore.string `quote` function is buggy 
+    //equal('"foo"'.quote(), '""foo""'); // NOTICE: Underscore.string `quote` function is buggy
     //  compared to https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String/quote specifications
     //  the Underscore.string function doesn't return an evaluable string
     //  TODO: send an issue to Underscore.string GitHub repository
     equal((1).quote(), '"1"');
+    equal("foo".quote("'"), "'foo'");
+
     // alias
     equal('foo'.q(), '"foo"');
     equal(''.q(), '""');
     equal(Object.q(null), '""');
     equal(Object.q(undefined), '""');
+  });
+
+  test('Strings: unquote', function(){
+    equal('"foo"'.unquote(), 'foo');
+    equal('""foo""'.unquote(), '"foo"');
+    equal('"1"'.unquote(), '1');
+    equal("'foo'".unquote("'"), 'foo');
   });
 
   test('Strings: surround', function(){
@@ -647,6 +659,33 @@ $(document).ready(function() {
     equal(''.repeat(2), '');
     equal(Object.repeat(null, 2), '');
     equal(Object.repeat(undefined, 2), '');
+  });
+
+  test('String: toBoolean', function() {
+    strictEqual("false".toBoolean(), false);
+    strictEqual("false".toBoolean(), false);
+    strictEqual("False".toBoolean(), false);
+    strictEqual("Falsy".toBoolean(null,["false", "falsy"]), false);
+    strictEqual("true".toBoolean(), true);
+    strictEqual("the truth".toBoolean("the truth", "this is falsy"), true);
+    strictEqual("this is falsy".toBoolean("the truth", "this is falsy"), false);
+    strictEqual("true".toBoolean(), true);
+    strictEqual("trUe".toBoolean(), true);
+    strictEqual("trUe".toBoolean(/tru?/i), true);
+    strictEqual("something else".toBoolean(), undefined);
+    strictEqual(function(){}.toBoolean(), true);
+    strictEqual(Object.toBoolean(function(){}), true);
+    strictEqual(/regexp/.toBoolean(), true);
+    strictEqual("".toBoolean(), undefined);
+    strictEqual((0).toBoolean(), false);
+    strictEqual((1).toBoolean(), true);
+    strictEqual("1".toBoolean(), true);
+    strictEqual("0".toBoolean(), false);
+    strictEqual((2).toBoolean(), undefined);
+    strictEqual("foo true bar".toBoolean(), undefined);
+    strictEqual("foo true bar".toBoolean(/true/), true);
+    strictEqual("foo FALSE bar".toBoolean(null, /FALSE/), false);
+    strictEqual(" true ".toBoolean(), true);
   });
 
 });

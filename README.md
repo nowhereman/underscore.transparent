@@ -240,6 +240,7 @@ Any suggestions or bug reports are welcome. Just open an issue.
 
 ### 0.6.0 ###
 * Add new functions and tests of Undercore.js between 1.4.4 and 1.5.2 versions
+* Add new functions and tests of Undercore.string.js between 2.3.1 and 2.3.3 versions
 
 ### 0.5.2 ###
 * Fix IE8 and below when using function with implicit scope like `isString("dd");`.
