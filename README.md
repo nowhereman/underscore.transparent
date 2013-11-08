@@ -54,8 +54,8 @@ But modifying native objects... isn't it evil?
 
 ## Download ##
 
-  * [Development version](https://raw.github.com/nowhereman/underscore.transparent/master/lib/underscore.transparent.js) *Uncompressed with Comments 14kb*
-  * [Production version](https://github.com/nowhereman/underscore.transparent/raw/master/dist/underscore.transparent.min.js) *Minified and Gzipped 1.9kb*
+  * [Development version](https://raw.github.com/nowhereman/underscore.transparent/master/lib/underscore.transparent.js) *Uncompressed with Comments 15kb*
+  * [Production version](https://github.com/nowhereman/underscore.transparent/raw/master/dist/underscore.transparent.min.js) *Minified and Gzipped 2kb*
 
 ## Installation and usage ##
 
@@ -93,7 +93,7 @@ But modifying native objects... isn't it evil?
 </script>
 ```
 
-### [bower](https://github.com/twitter/bower) installation ###
+### [Bower](https://github.com/bower/bower) installation ###
 
     bower install underscore.transparent
 
@@ -110,7 +110,7 @@ Or add `underscore.transparent` to your apps `component.json` or `bower.json`.
 
     npm install underscore.transparent
 
-### Configuration
+#### Configuration
 
 **Integrate with Underscore.js**:
 ```javascript
