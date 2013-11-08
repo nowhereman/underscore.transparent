@@ -110,6 +110,8 @@ Or add `underscore.transparent` to your apps `component.json` or `bower.json`.
 
     npm install underscore.transparent
 
+### Configuration
+
 **Integrate with Underscore.js**:
 ```javascript
 var _ = require('underscore');
