@@ -249,7 +249,7 @@ Any suggestions or bug reports are welcome. Just open an issue.
 
 ### 0.5.1 ###
 * Add newline at end of file `underscore.transparent.js`
-* Rewrite tests for `_.transparent` options with [Mocha](http://visionmedia.github.io/mocha) TDD interface and [expect.js](https://github.com/LearnBoost/expect.js) assertion library
+* Rewrite tests for `_.transparent` options with [Mocha](http://mochajs.org/) TDD interface and [expect.js](https://github.com/LearnBoost/expect.js) assertion library
 
 ### 0.5.0 ###
 
